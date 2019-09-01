@@ -1,0 +1,24 @@
+{
+  "name": "orbs-project-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orbs-network/orbs-project-generator.git"
+  },
+  "author": "Kirill Maksimov <kirill@orbs.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/orbs-network/orbs-project-generator/issues"
+  },
+  "homepage": "https://github.com/orbs-network/orbs-project-generator#readme",
+  "dependencies": {
+    "fs-extra": "^8.1.0",
+    "lodash": "^4.17.15",
+    "yargs": "^14.0.0"
+  }
+}
