@@ -1,7 +1,7 @@
 const { readFileSync, writeFileSync } = require("fs");
 const { join } = require("path");
 const { template, toLower } = require("lodash");
-const { mkdirpSync, rmdirSync } = require("fs-extra");
+const { mkdirpSync } = require("fs-extra");
 
 const templateSettings = {
     interpolate: /{{([\s\S]+?)}}/g
@@ -25,9 +25,11 @@ function create({ name, path }) {
 
 
     const src = join(path, "src");
+    const contract = join(src, "contract");
     const test = join(path, "test");
 
     mkdirpSync(src);
+    mkdirpSync(contract);
     mkdirpSync(test);
 
     writeFile(join(path, ".gitignore"), renderTemplate(".gitignore", {}));
@@ -35,6 +37,7 @@ function create({ name, path }) {
 
     writeFile(join(src, "deploy.js"), renderTemplate("deploy.js", params));
     writeFile(join(src, `${params.AppNameLowercase}.js`), renderTemplate("interface.js", params));
+    writeFile(join(contract, "contract.go"), readFileSync(join(__dirname, "templates", "contract", "contract.go")));
 
     writeFile(join(test, `${params.AppNameLowercase}_test.js`), renderTemplate("test.js", params));
 }

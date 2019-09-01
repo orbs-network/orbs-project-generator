@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --exit --timeout 40000 test"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,11 @@
     "fs-extra": "^8.1.0",
     "lodash": "^4.17.15",
     "yargs": "^14.0.0"
+  },
+  "devDependencies": {
+    "mocha": "^6.2.0"
+  },
+  "bin": {
+    "orbs-project-generator" : "./index.js"
   }
 }
