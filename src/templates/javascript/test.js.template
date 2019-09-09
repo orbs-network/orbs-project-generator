@@ -1,14 +1,14 @@
 const expect = require("expect.js");
 const { createAccount } = require("orbs-client-sdk");
 const { {{AppName}} } = require("../src/{{AppNameLowercase}}");
-const { deploy, getClient } = require("../src/deploy");
+const { deploy{{AppName}}, getClient } = require("../src/deploy_{{AppNameLowercase}}");
 
 describe("{{AppName}}", () => {
     it("updates contract state", async () => {
 		const contractOwner = createAccount();
 		const contractName = "{{AppName}}" + new Date().getTime();
 
-		await deploy(getClient(), contractOwner, contractName);
+		await deploy{{AppName}}(getClient(), contractOwner, contractName);
 		const {{AppNameLowercase}} = new {{AppName}}(getClient(), contractName, contractOwner.publicKey, contractOwner.privateKey);
 
 		const defaultValue = await {{AppNameLowercase}}.value();

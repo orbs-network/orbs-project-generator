@@ -26,6 +26,7 @@ describe("create", () => {
         removeSync(tmp);
 
         await runProcess(`node index.js create Hello ${tmp}`, join(__dirname, ".."));
+        await runProcess(`node index.js create Bye ${tmp}`, join(__dirname, ".."));
 
         await runProcess(`npm install`, tmp);
         await runProcess(`npm run gamma:start`, tmp);

@@ -10,15 +10,15 @@ function getClient() {
     return new Client(endpoint, chain, NetworkType.NETWORK_TYPE_TEST_NET);
 }
 
-function getContractCode() {
+function get{{AppName}}ContractCode() {
 	return [
-		readFileSync(__dirname + "/contract/contract.go")
+		readFileSync(__dirname + "/contract/{{AppNameLowercase}}/contract.go")
 	];
 }
 
-async function deploy(client, contractOwner, contractName) {
+async function deploy{{AppName}}(client, contractOwner, contractName) {
     const [tx, txid] = client.createDeployTransaction(contractOwner.publicKey, contractOwner.privateKey,
-		contractName, PROCESSOR_TYPE_NATIVE, ...getContractCode());
+		contractName, PROCESSOR_TYPE_NATIVE, ...get{{AppName}}ContractCode());
     const receipt = await client.sendTransaction(tx);
 	if (receipt.executionResult !== 'SUCCESS') {
 		throw new Error(receipt.outputArguments[0].value);
@@ -26,15 +26,15 @@ async function deploy(client, contractOwner, contractName) {
 }
 
 module.exports = {
-	getContractCode,
 	getClient,
-	deploy
+	get{{AppName}}ContractCode,
+	deploy{{AppName}}
 }
 
 if (!module.parent) {
 	(async () => {
 		try {
-			await deploy(getClient(), createAccount(), "{{AppName}}")
+			await deploy{{AppName}}(getClient(), createAccount(), "{{AppName}}")
 			console.log("Deployed {{AppName}} smart contract successfully");
 		} catch (e) {
 			console.error(e);
