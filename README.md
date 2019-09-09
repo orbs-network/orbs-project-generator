@@ -19,7 +19,7 @@ npm install -g @orbs-network/orbs-project-generator
 
 Plase note that app name should be camel case: `AppName`.
 
-You can run the generator multiple times in the same directory to generated scaffolding.
+You can safely run the generator multiple times in the same directory to generate scaffolding for different contracts.
 
 ```
 orbs-project-generator create <AppName> <path>
