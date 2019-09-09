@@ -5,7 +5,7 @@
     "scripts": {
         "gamma:start": "gamma-cli start-local -wait",
         "gamma:stop": "gamma-cli stop-local",
-        "{{AppNameLowercase}}:local": "node ./src/deploy.js",
+        "{{AppNameLowercase}}:local": "node ./src/deploy_{{AppNameLowercase}}.js",
         "test": "mocha test --timeout 20000 --exit"
     },
     "devDependencies": {

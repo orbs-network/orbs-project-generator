@@ -1,4 +1,5 @@
-const { readFileSync } = require("fs");
+const { readFileSync, readdirSync } = require("fs");
+const { join } = require("path");
 const {
 	Client, createAccount,
 	PROCESSOR_TYPE_NATIVE, NetworkType
@@ -10,15 +11,17 @@ function getClient() {
     return new Client(endpoint, chain, NetworkType.NETWORK_TYPE_TEST_NET);
 }
 
-function getContractCode() {
-	return [
-		readFileSync(__dirname + "/contract/contract.go")
-	];
+// Read all go files except tests
+function get{{AppName}}ContractCode() {
+	const dir = join(__dirname, "contract", "{{AppNameLowercase}}");
+	return readdirSync(dir).filter(f => f.match(/\.go$/) && !f.match(/\_test.go$/)).map(f => {
+		return readFileSync(join(dir, f));
+	});
 }
 
-async function deploy(client, contractOwner, contractName) {
+async function deploy{{AppName}}(client, contractOwner, contractName) {
     const [tx, txid] = client.createDeployTransaction(contractOwner.publicKey, contractOwner.privateKey,
-		contractName, PROCESSOR_TYPE_NATIVE, ...getContractCode());
+		contractName, PROCESSOR_TYPE_NATIVE, ...get{{AppName}}ContractCode());
     const receipt = await client.sendTransaction(tx);
 	if (receipt.executionResult !== 'SUCCESS') {
 		throw new Error(receipt.outputArguments[0].value);
@@ -26,15 +29,15 @@ async function deploy(client, contractOwner, contractName) {
 }
 
 module.exports = {
-	getContractCode,
 	getClient,
-	deploy
+	get{{AppName}}ContractCode,
+	deploy{{AppName}}
 }
 
 if (!module.parent) {
 	(async () => {
 		try {
-			await deploy(getClient(), createAccount(), "{{AppName}}")
+			await deploy{{AppName}}(getClient(), createAccount(), "{{AppName}}")
 			console.log("Deployed {{AppName}} smart contract successfully");
 		} catch (e) {
 			console.error(e);
