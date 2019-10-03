@@ -6,16 +6,14 @@ function getErrorFromReceipt(receipt) {
 }
 
 class {{AppName}} {
-	constructor(orbsClient, contractName, publicKey, privateKey) {
+	constructor(orbsClient, contractName) {
 		this.client = orbsClient;
 		this.contractName = contractName;
-		this.publicKey = publicKey;
-		this.privateKey = privateKey;
 	}
 
 	async add(n) {
-		const [ tx, txId ] = this.client.createTransaction(
-			this.publicKey, this.privateKey, this.contractName,
+		const [ tx, txId ] = await this.client.createTransaction(
+			this.contractName,
 			"add",
 			[
 				argUint64(n)
@@ -31,8 +29,7 @@ class {{AppName}} {
 	}
 
 	async value() {
-		const query = this.client.createQuery(
-			this.publicKey,
+		const query = await this.client.createQuery(
 			this.contractName,
 			"value",
 			[]

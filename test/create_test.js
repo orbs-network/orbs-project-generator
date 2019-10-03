@@ -28,6 +28,8 @@ describe("create", () => {
         await runProcess(`node index.js create Hello ${tmp}`, join(__dirname, ".."));
         await runProcess(`node index.js create Bye ${tmp}`, join(__dirname, ".."));
 
+        await runProcess(`cd ${__dirname}/tmp && npm link orbs-client-sdk`) // FIXME remove after SDK v2.0 is published
+
         await runProcess(`npm install`, tmp);
         await runProcess(`npm run gamma:start`, tmp);
         await runProcess(`npm run hello:local`, tmp);
