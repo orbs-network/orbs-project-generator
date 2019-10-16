@@ -1,5 +1,5 @@
 const expect = require("expect.js");
-const { createAccount } = require("orbs-client-sdk");
+const { createAccount, LocalSigner } = require("orbs-client-sdk");
 const { {{AppName}} } = require("../src/{{AppNameLowercase}}");
 const { deploy{{AppName}}, getClient } = require("../src/deploy_{{AppNameLowercase}}");
 
@@ -8,8 +8,9 @@ describe("{{AppName}}", () => {
 		const contractOwner = createAccount();
 		const contractName = "{{AppName}}" + new Date().getTime();
 
-		await deploy{{AppName}}(getClient(), contractOwner, contractName);
-		const {{AppNameLowercase}} = new {{AppName}}(getClient(), contractName, contractOwner.publicKey, contractOwner.privateKey);
+		const signer = new LocalSigner(contractOwner);
+		await deploy{{AppName}}(getClient(signer), contractName);
+		const {{AppNameLowercase}} = new {{AppName}}(getClient(signer), contractName);
 
 		const defaultValue = await {{AppNameLowercase}}.value();
 		expect(defaultValue).to.be.eql(0);
